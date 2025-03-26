@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Driving Simulator</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #speedometer {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        #needle {
+            width: 2px;
+            height: 50px;
+            background: white;
+            transform-origin: bottom center;
+            margin-top: 10px;
+        }
+        #joystick-zone {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 150px;
+            height: 150px;
+            z-index: 2;
+        }
+        .player-name {
+            position: absolute;
+            color: white;
+            font-family: Arial, sans-serif;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 5px;
+            border-radius: 3px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div id="joystick-zone"></div>
+    <div id="speedometer">
+        <div id="speed-text">0 km/h</div>
+        <div id="needle"></div>
+    </div>
+    <div id="distance-text" style="position: absolute; top: 10px; left: 10px; color: white;"></div>
+    <div id="acceleration-text" style="position: absolute; top: 30px; left: 10px; color: white;"></div>
+
+    <!-- Load all required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.8.5/dist/nipplejs.min.js"></script>
+    
+    <!-- Your main script -->
+    <script src="https://cdn.jsdelivr.net/gh/eRobLex/es@refs/heads/main/main.js"></script>
+</body>
+</html>
