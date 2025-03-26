@@ -536,10 +536,15 @@ const maxSteerVal = config.maxSteerVal;
 const maxForce = config.maxForce;
 
 // Mobile controls using nipple.js
-let joystick = null;
-let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// Replace your existing mobile detection with this:
+const isMobile = /iPad|iPhone|iPod|Android/i.test(navigator.userAgent) || 
+                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
 if (isMobile) {
+  initTouchControls();
+}
+
+function initTouchControls() {
   const joystickZone = document.getElementById('joystick-zone');
   joystick = nipplejs.create({
     zone: joystickZone,
@@ -568,7 +573,7 @@ if (isMobile) {
       actions.right = true;
     }
     
-    // Forward/backward - forward is up (around 0 or 2π)
+    // Forward/backward
     if (angle > Math.PI * 1.25 && angle < Math.PI * 1.75) {
       // Down - brake
       actions.brake = true;
@@ -606,50 +611,55 @@ if (isMobile) {
   });
 }
 
+// Add this to your existing key event listeners
 document.addEventListener("keydown", (event) => {
-  switch (event.code) {
-    case "ArrowUp":
-    case "KeyW":
+  const key = event.key.toLowerCase();
+  
+  switch (key) {
+    case "w":
+    case "arrowup":
       actions.accelerate = true;
       break;
-    case "ArrowDown":
-    case "KeyS":
+    case "s":
+    case "arrowdown":
       actions.brake = true;
       break;
-    case "ArrowLeft":
-    case "KeyA":
+    case "a":
+    case "arrowleft":
       actions.left = true;
       break;
-    case "ArrowRight":
-    case "KeyD":
+    case "d":
+    case "arrowright":
       actions.right = true;
       break;
-    case "KeyF":
+    case "f":
       flipCar();
       break;
   }
 });
 
 document.addEventListener("keyup", (event) => {
-  switch (event.code) {
-    case "ArrowUp":
-    case "KeyW":
+  const key = event.key.toLowerCase();
+  
+  switch (key) {
+    case "w":
+    case "arrowup":
       actions.accelerate = false;
       break;
-    case "ArrowDown":
-    case "KeyS":
+    case "s":
+    case "arrowdown":
       actions.brake = false;
       vehicle.setBrake(0, 0);
       vehicle.setBrake(0, 1);
       vehicle.setBrake(0, 2);
       vehicle.setBrake(0, 3);
       break;
-    case "ArrowLeft":
-    case "KeyA":
+    case "a":
+    case "arrowleft":
       actions.left = false;
       break;
-    case "ArrowRight":
-    case "KeyD":
+    case "d":
+    case "arrowright":
       actions.right = false;
       break;
   }
